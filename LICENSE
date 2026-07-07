@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Nota: la licencia MIT cubre el código de este repositorio. NO cubre modelos de
-voz de terceros (Piper u otros) que decidas usar con él — esos tienen sus
-propias licencias, y ninguno se distribuye dentro de este repo (ver
-docs/VOICES.md).
