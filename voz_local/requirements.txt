@@ -1,0 +1,21 @@
+# Asistente de voz Deepy — entorno Windows, Python 3.14, RTX (CUDA opcional).
+keyboard==0.13.5
+sounddevice==0.5.5
+numpy==2.4.2
+faster-whisper==1.2.1
+piper-tts==1.4.2
+pystray==0.19.5
+Pillow==12.1.1
+pycaw==20251023
+gspread==6.2.1
+google-auth==2.55.1
+
+# Aceleración GPU opcional para faster-whisper (fallback automático a CPU si falta).
+nvidia-cublas-cu12==12.9.2.10
+nvidia-cudnn-cu12==9.21.0.82
+
+# openwakeword: instalar con --no-deps si ya hay onnxruntime-gpu instalado,
+# para no arrastrar el paquete onnxruntime (CPU) — mismo nombre de import,
+# conflicto de archivos entre ambos. Solo hace falta si USAR_WAKEWORD=True.
+# pip install --no-deps openwakeword==0.6.0
+openwakeword==0.6.0

@@ -1,0 +1,11 @@
+voz_local/voces/
+*.wav
+*.log
+__pycache__/
+.pytest_cache/
+
+# Datos y secretos personales — cada quien tiene los suyos, nunca al repo.
+voz_local/config.py
+voz_local/credentials.json
+organizado.md
+tasks/
