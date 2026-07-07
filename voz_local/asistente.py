@@ -54,7 +54,7 @@ USAR_WAKEWORD = False  # ponytail: "oye dipi" desactivado (falsos positivos); Tr
 WAKEWORD_PATH = Path(__file__).parent / "voces" / "wakeword" / "oye_deepy.onnx"
 UMBRAL = 0.6  # ajustar en la práctica: sube si dispara con ruido, baja si no detecta la voz
 
-SILENCIO_RMS = 300  # nivel de audio (int16) por debajo del cual se considera silencio
+SILENCIO_RMS = 50  # ponytail: mic de este equipo mide ~105 de RMS hablando normal (300 lo descartaba todo); bajar más si sigue descartando voz real, subir si empieza a alucinar con ruido de fondo
 SILENCIO_SEG = 1.5  # segundos de silencio seguido para cortar la grabación
 MAX_GRAB_SEG = 10  # tope máximo de grabación aunque no se detecte silencio
 
@@ -299,7 +299,13 @@ def main() -> None:
         _estado("grabando", notificar="Escuchando tu pregunta...")
         audio = grabar_mientras_tecla_presionada(TECLA) if disparador == "tecla" else grabar_hasta_silencio()
         keyboard.stash_state()  # libera teclas que la librería pudo dejar "pegadas" y re-disparar solas
-        if audio.size == 0 or np.sqrt(np.mean(audio.astype(np.float64) ** 2)) < SILENCIO_RMS:
+        if audio.size == 0:
+            print("Sin audio capturado (¿se soltó F9 muy rápido, o no hay dispositivo de entrada?).")
+            continue
+        rms = np.sqrt(np.mean(audio.astype(np.float64) ** 2))
+        if rms < SILENCIO_RMS:
+            print(f"Audio descartado por silencio (RMS={rms:.0f}, umbral={SILENCIO_RMS}); "
+                  "si sí hablaste, baja SILENCIO_RMS.")
             continue  # no hubo voz real (silencio/ruido); evita que Whisper alucine texto
         _estado("procesando")
         pregunta = transcribir(audio)
@@ -315,6 +321,8 @@ def main() -> None:
             hablar(respuesta)
         finally:
             volumen.restaurar(volumen_original)
+        _estado("cerrando")
+        sd.sleep(overlay.duracion_ms("cerrando"))  # 0 si no hay gif de cierre todavía
 
 
 if __name__ == "__main__":

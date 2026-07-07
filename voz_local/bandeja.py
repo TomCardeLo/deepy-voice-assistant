@@ -11,6 +11,7 @@ COLORES = {
     "grabando": "#e74c3c",
     "procesando": "#f1c40f",
     "hablando": "#2ecc71",
+    "cerrando": "#95a5a6",
 }
 
 _icono: pystray.Icon | None = None
